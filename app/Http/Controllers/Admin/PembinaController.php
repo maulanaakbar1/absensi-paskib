@@ -3,14 +3,19 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\{User, Pembina};
+use App\Models\User;
+use App\Models\Pembina;
+use App\Models\Ekstrakurikuler;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class PembinaController extends Controller {
+    
     public function index() {
         $pembinas = Pembina::with('user')->latest()->get();
-        return view('admin.pembina', compact('pembinas'));
+        $ekskuls = Ekstrakurikuler::all();
+
+        return view('admin.pembina', compact('pembinas', 'ekskuls'));
     }
 
     public function store(Request $request) {

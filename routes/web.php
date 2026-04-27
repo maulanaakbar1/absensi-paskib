@@ -4,8 +4,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PembinaController;
+use App\Http\Controllers\Admin\EkstrakurikulerController;
 
-Route::get('/', function () { return view('welcome'); });
+Route::get('/', function () { 
+    return redirect()->route('login'); 
+});
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -25,12 +28,19 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/pembina', [PembinaController::class, 'store'])->name('admin.pembina.store');
         Route::put('/pembina/{id}', [PembinaController::class, 'update'])->name('admin.pembina.update');
         Route::delete('/pembina/{id}', [PembinaController::class, 'destroy'])->name('admin.pembina.destroy');
+
+        Route::get('/ekskul', [EkstrakurikulerController::class, 'index'])->name('admin.ekskul.index');
+        Route::post('/ekskul', [EkstrakurikulerController::class, 'store'])->name('admin.ekskul.store');
+        Route::put('/ekskul/{id}', [EkstrakurikulerController::class, 'update'])->name('admin.ekskul.update');
+        Route::delete('/ekskul/{id}', [EkstrakurikulerController::class, 'destroy'])->name('admin.ekskul.destroy');
     });
 
     // --- KHUSUS PEMBINA ---
     Route::middleware(['role:pembina'])->prefix('pembina')->group(function () {
-        Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('pembina.dashboard');
+
         
+
     });
 
     // --- KHUSUS SISWA ---

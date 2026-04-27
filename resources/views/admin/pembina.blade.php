@@ -118,6 +118,13 @@
                     </div>
                 </div>
 
+                <select name="ekstrakurikuler_id" class="w-full px-4 py-3 rounded-xl border border-slate-200" required>
+                    <option value="">Pilih Ekskul</option>
+                    @foreach($ekskuls as $e)
+                        <option value="{{ $e->id }}">{{ $e->nama }}</option>
+                    @endforeach
+                </select>
+
                 <div class="flex gap-3 pt-4">
                     <button type="button" @click="openAdd = false" class="flex-1 px-4 py-3 rounded-xl font-bold text-slate-500 hover:bg-slate-50 transition">Batal</button>
                     <button type="submit" class="flex-[2] bg-blue-600 text-white py-3 rounded-xl font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 transition">Simpan Data</button>
@@ -155,6 +162,13 @@
                         <input type="text" name="no_telp" x-model="editData.no_telp" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-blue-500 outline-none transition">
                     </div>
                 </div>
+
+                <select name="ekstrakurikuler_id" class="w-full px-4 py-3 rounded-xl border border-slate-200" required>
+                    <option value="">Pilih Ekskul</option>
+                    @foreach($ekskuls as $e)
+                        <option value="{{ $e->id }}">{{ $e->nama }}</option>
+                    @endforeach
+                </select>
 
                 <div class="flex gap-3 pt-4">
                     <button type="button" @click="openEdit = false" class="flex-1 px-4 py-3 rounded-xl font-bold text-slate-500 hover:bg-slate-50 transition">Batal</button>
