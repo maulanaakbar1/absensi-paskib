@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\PembinaController;
 use App\Http\Controllers\Admin\EkstrakurikulerController;
 use App\Http\Controllers\Pembina\DashboardController as PembinaDashboard;
 use App\Http\Controllers\Pembina\ProfileController as PembinaProfile;
+use App\Http\Controllers\Pembina\AnggotaController;
 
 Route::get('/', function () { 
     return redirect()->route('login'); 
@@ -42,6 +43,12 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/profile', [PembinaProfile::class, 'index'])->name('pembina.profile');
         Route::put('/profile', [PembinaProfile::class, 'update'])->name('pembina.profile.update');
+
+        Route::get('/anggota', [AnggotaController::class, 'index'])->name('pembina.anggota.index');
+        Route::post('/anggota', [AnggotaController::class, 'store'])->name('pembina.anggota.store');
+        Route::put('/anggota/{id}', [AnggotaController::class, 'update'])->name('pembina.anggota.update');
+        Route::delete('/anggota/{id}', [AnggotaController::class, 'destroy'])->name('pembina.anggota.destroy');
+
 
     });
 
