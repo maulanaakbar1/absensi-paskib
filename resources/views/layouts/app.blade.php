@@ -22,11 +22,11 @@
          class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-40 md:hidden">
     </div>
 
-    @include('partials.sidebar')
+    @include('partials.' . Auth::user()->role . '.sidebar')
 
     <main class="flex-1 flex flex-col h-screen overflow-y-auto">
-        @include('partials.navbar')
-
+        @include('partials.' . Auth::user()->role . '.navbar')
+        
         <div class="p-8">
             @yield('content')
         </div>

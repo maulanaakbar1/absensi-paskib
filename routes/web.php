@@ -2,9 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Admin\PembinaController;
 use App\Http\Controllers\Admin\EkstrakurikulerController;
+use App\Http\Controllers\Pembina\DashboardController as PembinaDashboard;
 
 Route::get('/', function () { 
     return redirect()->route('login'); 
@@ -21,9 +22,8 @@ Route::middleware(['auth'])->group(function () {
 
     // --- KHUSUS ADMIN --
     Route::middleware(['role:admin'])->prefix('admin')->group(function () {
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+        Route::get('/dashboard', [AdminDashboard::class, 'index'])->name('admin.dashboard');
         
-        // Route Baru Pembina
         Route::get('/pembina', [PembinaController::class, 'index'])->name('admin.pembina.index');
         Route::post('/pembina', [PembinaController::class, 'store'])->name('admin.pembina.store');
         Route::put('/pembina/{id}', [PembinaController::class, 'update'])->name('admin.pembina.update');
@@ -37,9 +37,9 @@ Route::middleware(['auth'])->group(function () {
 
     // --- KHUSUS PEMBINA ---
     Route::middleware(['role:pembina'])->prefix('pembina')->group(function () {
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('pembina.dashboard');
+        Route::get('/dashboard', [PembinaDashboard::class, 'index'])->name('pembina.dashboard');
 
-        
+
 
     });
 

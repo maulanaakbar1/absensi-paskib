@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Ekstrakurikuler;
+use App\Models\Pembina;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        return view('admin.dashboard');
+        $totalEkskul = Ekstrakurikuler::count();
+        $totalPembina = Pembina::count();
+        
+        return view('admin.dashboard', compact('totalEkskul', 'totalPembina'));
     }
 }
