@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Admin\PembinaController;
 use App\Http\Controllers\Admin\EkstrakurikulerController;
 use App\Http\Controllers\Pembina\DashboardController as PembinaDashboard;
+use App\Http\Controllers\Pembina\ProfileController as PembinaProfile;
 
 Route::get('/', function () { 
     return redirect()->route('login'); 
@@ -39,7 +40,8 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['role:pembina'])->prefix('pembina')->group(function () {
         Route::get('/dashboard', [PembinaDashboard::class, 'index'])->name('pembina.dashboard');
 
-
+        Route::get('/profile', [PembinaProfile::class, 'index'])->name('pembina.profile');
+        Route::put('/profile', [PembinaProfile::class, 'update'])->name('pembina.profile.update');
 
     });
 

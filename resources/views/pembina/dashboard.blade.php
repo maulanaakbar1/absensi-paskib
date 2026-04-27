@@ -3,7 +3,6 @@
 
 @section('content')
 <div class="space-y-8">
-    {{-- Welcome Section --}}
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
             <h3 class="text-2xl font-bold text-slate-800">Halo, {{ Auth::user()->name }}! 👋</h3>
