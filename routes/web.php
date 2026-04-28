@@ -62,6 +62,10 @@ Route::middleware(['auth'])->group(function () {
     // --- KHUSUS SISWA ---
     Route::middleware(['role:siswa'])->prefix('siswa')->group(function () {
         Route::get('/dashboard', [SiswaDashboard::class, 'index'])->name('siswa.dashboard');
+
+        Route::get('/profile', [App\Http\Controllers\Siswa\ProfileController::class, 'index'])->name('siswa.profile');
+        Route::put('/profile', [App\Http\Controllers\Siswa\ProfileController::class, 'update'])->name('siswa.profile.update');
+        
     });
 
 });

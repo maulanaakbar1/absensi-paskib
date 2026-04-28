@@ -7,7 +7,7 @@
     <div class="flex items-center justify-between">
         <div>
             <h3 class="text-2xl font-bold text-slate-800">Data Anggota Siswa</h3>
-            <p class="text-slate-500 text-sm">Kelola daftar siswa ekstrakurikuler.</p>
+            <p class="text-slate-500 text-sm">Kelola daftar siswa ekstrakurikuler Anda.</p>
         </div>
         <button @click="openModal = true; editMode = false; currentData = {}" 
                 class="bg-emerald-600 text-white px-6 py-3 rounded-2xl font-bold shadow-lg shadow-emerald-100 hover:bg-emerald-700 transition flex items-center gap-2">
@@ -31,7 +31,7 @@
                 <tr class="bg-slate-50/50 border-b border-slate-100">
                     <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase">Siswa</th>
                     <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase">NIS / Kelas</th>
-                    <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase">Ekstrakurikuler</th>
+                    <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase">Jenis Kelamin</th>
                     <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase text-center">Aksi</th>
                 </tr>
             </thead>
@@ -51,7 +51,7 @@
                     </td>
                     <td class="px-6 py-4">
                         <span class="px-3 py-1 rounded-lg bg-slate-100 text-slate-600 text-xs font-bold">
-                            {{ $s->ekstrakurikuler->nama ?? '-' }}
+                            {{ $s->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}
                         </span>
                     </td>
                     <td class="px-6 py-4">
@@ -62,8 +62,7 @@
                                 email: '{{ $s->user->email }}',
                                 nis: '{{ $s->nis }}',
                                 kelas: '{{ $s->kelas }}',
-                                jk: '{{ $s->jenis_kelamin }}',
-                                ekskul: '{{ $s->ekstrakurikuler_id }}'
+                                jk: '{{ $s->jenis_kelamin }}'
                             }" class="p-2 text-amber-500 hover:bg-amber-50 rounded-lg transition">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
                             </button>
@@ -77,11 +76,15 @@
                     </td>
                 </tr>
                 @empty
+                <tr>
+                    <td colspan="4" class="px-6 py-10 text-center text-slate-400 italic">Belum ada anggota di ekstrakurikuler Anda.</td>
+                </tr>
                 @endforelse
             </tbody>
         </table>
     </div>
 
+    {{-- Modal --}}
     <div x-show="openModal" class="fixed inset-0 z-[99] overflow-y-auto" x-cloak>
         <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
             <div @click="openModal = false" class="fixed inset-0 transition-opacity bg-slate-900/40 backdrop-blur-sm"></div>
@@ -120,22 +123,13 @@
                                 <input type="text" name="kelas" x-model="currentData.kelas" placeholder="Contoh: XII RPL 1" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-emerald-500 focus:ring-0 transition" required>
                             </div>
                         </div>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="text-xs font-bold text-slate-400 uppercase ml-1">Jenis Kelamin</label>
-                                <select name="jenis_kelamin" x-model="currentData.jk" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-emerald-500 focus:ring-0 transition" required>
-                                    <option value="L">Laki-laki</option>
-                                    <option value="P">Perempuan</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="text-xs font-bold text-slate-400 uppercase ml-1">Ekstrakurikuler</label>
-                                <select name="ekstrakurikuler_id" x-model="currentData.ekskul" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-emerald-500 focus:ring-0 transition" required>
-                                    @foreach($ekskul as $e)
-                                        <option value="{{ $e->id }}">{{ $e->nama }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                        <div>
+                            <label class="text-xs font-bold text-slate-400 uppercase ml-1">Jenis Kelamin</label>
+                            <select name="jenis_kelamin" x-model="currentData.jk" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-emerald-500 focus:ring-0 transition" required>
+                                <option value="">Pilih Jenis Kelamin</option>
+                                <option value="L">Laki-laki</option>
+                                <option value="P">Perempuan</option>
+                            </select>
                         </div>
                     </div>
 
