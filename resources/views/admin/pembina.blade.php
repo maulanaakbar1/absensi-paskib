@@ -26,6 +26,7 @@
                         <th class="px-6 py-4 text-xs uppercase tracking-wider font-bold text-slate-500">Info Pembina</th>
                         <th class="px-6 py-4 text-xs uppercase tracking-wider font-bold text-slate-500">NIP</th>
                         <th class="px-6 py-4 text-xs uppercase tracking-wider font-bold text-slate-500">Kontak</th>
+                        <th class="px-6 py-4 text-xs uppercase tracking-wider font-bold text-slate-500">Ekstrakurikuler</th>
                         <th class="px-6 py-4 text-xs uppercase tracking-wider font-bold text-slate-500 text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -50,6 +51,24 @@
                             <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-600 border border-emerald-100">
                                 {{ $p->no_telp ?? 'No Contact' }}
                             </span>
+                        </td>
+                        <td class="px-6 py-4">
+                            @if($p->ekstrakurikuler)
+                                <div class="flex items-center gap-2">
+                                    <div class="h-8 w-8 rounded-lg bg-slate-100 flex items-center justify-center overflow-hidden">
+                                        @if($p->ekstrakurikuler->foto)
+                                            <img src="{{ asset('storage/' . $p->ekstrakurikuler->foto) }}" alt="" class="h-full w-full object-cover">
+                                        @else
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                            </svg>
+                                        @endif
+                                    </div>
+                                    <span class="text-sm font-bold text-slate-700">{{ $p->ekstrakurikuler->nama }}</span>
+                                </div>
+                            @else
+                                <span class="text-xs text-slate-400 italic">Belum ditugaskan</span>
+                            @endif
                         </td>
                         <td class="px-6 py-4">
                             <div class="flex items-center justify-center gap-2">

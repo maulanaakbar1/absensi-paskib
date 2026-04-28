@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\EkstrakurikulerController;
 use App\Http\Controllers\Pembina\DashboardController as PembinaDashboard;
 use App\Http\Controllers\Pembina\ProfileController as PembinaProfile;
 use App\Http\Controllers\Pembina\AnggotaController;
+use App\Http\Controllers\Siswa\DashboardController as SiswaDashboard;
 
 Route::get('/', function () { 
     return redirect()->route('login'); 
@@ -54,10 +55,7 @@ Route::middleware(['auth'])->group(function () {
 
     // --- KHUSUS SISWA ---
     Route::middleware(['role:siswa'])->prefix('siswa')->group(function () {
-        Route::get('/dashboard', function () { 
-            return view('siswa.dashboard'); 
-        })->name('siswa.dashboard');
-        
+        Route::get('/dashboard', [SiswaDashboard::class, 'index'])->name('siswa.dashboard');
     });
 
 });

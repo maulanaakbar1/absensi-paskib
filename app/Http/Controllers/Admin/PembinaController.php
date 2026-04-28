@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 class PembinaController extends Controller {
     
     public function index() {
-        $pembinas = Pembina::with('user')->latest()->get();
+        $pembinas = Pembina::with(['user', 'ekstrakurikuler'])->latest()->get();
         $ekskuls = Ekstrakurikuler::all();
 
         return view('admin.pembina', compact('pembinas', 'ekskuls'));
@@ -23,6 +23,7 @@ class PembinaController extends Controller {
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
+            'ekstrakurikuler_id' => 'required|exists:ekstrakurikulers,id', 
         ]);
 
         $user = User::create([
@@ -36,6 +37,7 @@ class PembinaController extends Controller {
             'user_id' => $user->id,
             'nip' => $request->nip,
             'no_telp' => $request->no_telp,
+            'ekstrakurikuler_id' => $request->ekstrakurikuler_id, 
         ]);
 
         return back()->with('success', 'Pembina berhasil ditambahkan');
@@ -46,9 +48,11 @@ class PembinaController extends Controller {
         $user = $pembina->user;
 
         $user->update(['name' => $request->name]);
+        
         $pembina->update([
             'nip' => $request->nip,
-            'no_telp' => $request->no_telp
+            'no_telp' => $request->no_telp,
+            'ekstrakurikuler_id' => $request->ekstrakurikuler_id 
         ]);
 
         return back()->with('success', 'Data diperbarui');
@@ -56,7 +60,7 @@ class PembinaController extends Controller {
 
     public function destroy($id) {
         $pembina = Pembina::findOrFail($id);
-        $pembina->user->delete(); // Cascade delete akan menghapus data pembinanya
+        $pembina->user->delete(); 
         return back()->with('success', 'Pembina dihapus');
     }
 }

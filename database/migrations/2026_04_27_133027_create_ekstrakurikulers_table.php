@@ -14,11 +14,10 @@ return new class extends Migration
             $table->id();
             $table->string('nama')->unique();
             $table->text('deskripsi')->nullable();
-            $table->string('foto')->nullable(); // Untuk logo ekskul
+            $table->string('foto')->nullable(); 
             $table->timestamps();
         });
 
-        // Update table pembinas untuk relasi ke ekskul
         Schema::table('pembinas', function (Blueprint $table) {
             $table->foreignId('ekstrakurikuler_id')->nullable()->constrained()->onDelete('set null');
         });
