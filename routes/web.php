@@ -9,6 +9,7 @@ use App\Http\Controllers\Pembina\DashboardController as PembinaDashboard;
 use App\Http\Controllers\Pembina\ProfileController as PembinaProfile;
 use App\Http\Controllers\Pembina\AnggotaController;
 use App\Http\Controllers\Siswa\DashboardController as SiswaDashboard;
+use App\Http\Controllers\Admin\SiswaController as AdminSiswa;
 
 Route::get('/', function () { 
     return redirect()->route('login'); 
@@ -31,6 +32,11 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/pembina', [PembinaController::class, 'store'])->name('admin.pembina.store');
         Route::put('/pembina/{id}', [PembinaController::class, 'update'])->name('admin.pembina.update');
         Route::delete('/pembina/{id}', [PembinaController::class, 'destroy'])->name('admin.pembina.destroy');
+
+        Route::get('/siswa', [AdminSiswa::class, 'index'])->name('admin.siswa.index');
+        Route::post('/siswa', [AdminSiswa::class, 'store'])->name('admin.siswa.store');
+        Route::put('/siswa/{id}', [AdminSiswa::class, 'update'])->name('admin.siswa.update');
+        Route::delete('/siswa/{id}', [AdminSiswa::class, 'destroy'])->name('admin.siswa.destroy');
 
         Route::get('/ekskul', [EkstrakurikulerController::class, 'index'])->name('admin.ekskul.index');
         Route::post('/ekskul', [EkstrakurikulerController::class, 'store'])->name('admin.ekskul.store');
