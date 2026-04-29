@@ -30,6 +30,8 @@
         <div class="p-8">
             @yield('content')
         </div>
+
+        @include('partials.' . Auth::user()->role . '.footer')
     </main>
 
 </body>

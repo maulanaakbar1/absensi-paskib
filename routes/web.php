@@ -66,6 +66,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/profile', [App\Http\Controllers\Siswa\ProfileController::class, 'index'])->name('siswa.profile');
         Route::put('/profile', [App\Http\Controllers\Siswa\ProfileController::class, 'update'])->name('siswa.profile.update');
         
+        Route::get('/absen', [App\Http\Controllers\Siswa\AbsenController::class, 'index'])->name('siswa.absen');
+        Route::post('/absen', [App\Http\Controllers\Siswa\AbsenController::class, 'store'])->name('siswa.absen.store');
+        Route::get('/absen/riwayat', [App\Http\Controllers\Siswa\AbsenController::class, 'riwayat'])->name('siswa.absen.riwayat');
+
     });
 
 });

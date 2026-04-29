@@ -40,6 +40,22 @@
             </svg>
             <span class="font-bold text-sm">Profil Saya</span>
         </a>
+
+        <a href="{{ route('siswa.absen') }}" 
+           class="flex items-center gap-3 px-4 py-3 rounded-2xl transition {{ request()->routeIs('siswa.absen') ? 'bg-blue-50 text-blue-600' : 'text-slate-500 hover:bg-slate-50' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 002-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+            </svg>
+            <span class="font-bold text-sm">Absensi</span>
+        </a>
+
+        <a href="{{ route('siswa.absen.riwayat') }}" 
+        class="flex items-center gap-3 px-4 py-3 rounded-2xl transition {{ request()->routeIs('siswa.absen.riwayat') ? 'bg-blue-50 text-blue-600' : 'text-slate-500 hover:bg-slate-50' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span class="font-bold text-sm">Riwayat Absen</span>
+        </a>
     </nav>
 
     <div class="p-4 border-t border-slate-100 mt-auto">
