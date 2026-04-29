@@ -26,6 +26,14 @@ class ProfileController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'kelas' => 'required|string',
+            'nisn' => 'required|string|unique:siswas,nisn,' . $siswa->id,
+            'alamat' => 'nullable|string',
+            'tempat_lahir' => 'nullable|string',
+            'tanggal_lahir' => 'nullable|date',
+            'nama_ayah' => 'nullable|string',
+            'nama_ibu' => 'nullable|string',
+            'no_telp_ayah' => 'nullable|string|max:15',
+            'no_telp_ibu' => 'nullable|string|max:15',
             'password' => 'nullable|min:8|confirmed',
         ]);
 
@@ -38,8 +46,16 @@ class ProfileController extends Controller
 
         $siswa->update([
             'kelas' => $request->kelas,
+            'nisn' => $request->nisn,
+            'alamat' => $request->alamat,
+            'tempat_lahir' => $request->tempat_lahir,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'nama_ayah' => $request->nama_ayah,
+            'nama_ibu' => $request->nama_ibu,
+            'no_telp_ayah' => $request->no_telp_ayah,
+            'no_telp_ibu' => $request->no_telp_ibu,
         ]);
 
-        return back()->with('success', 'Profil berhasil diperbarui!');
+        return back()->with('success', 'Profil dan data personal berhasil diperbarui!');
     }
 }

@@ -2,6 +2,16 @@
        class="fixed md:static inset-y-0 left-0 w-72 bg-white border-r border-slate-200 z-50 transition-transform duration-300 md:translate-x-0 flex flex-col">
     
     <div class="p-8">
+        {{-- TAMBAHKAN TOMBOL SILANG DI SINI --}}
+        <div class="flex items-center justify-between md:hidden mb-6">
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Menu Navigasi</span>
+            <button @click="sidebarOpen = false" class="text-slate-400 hover:text-red-500 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+
         <div class="flex items-center gap-3">
             <div class="h-10 w-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-200">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
