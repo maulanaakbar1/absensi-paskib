@@ -31,24 +31,32 @@ class AbsenController extends Controller
     {
         $siswa = Auth::user()->siswa;
 
-        // Cek apakah sudah absen hari ini
+        $request->validate([
+            'foto' => 'required',
+            'lokasi' => 'required',
+            'status' => 'required|in:hadir,izin,sakit'
+        ]);
+
         $sudahAbsen = Absensi::where('siswa_id', $siswa->id)
                             ->whereDate('tanggal', Carbon::today())
                             ->exists();
 
         if ($sudahAbsen) {
-            return back()->with('error', 'Anda sudah melakukan absensi hari ini!');
+            return redirect()->route('siswa.riwayat')->with('error', 'Anda sudah absen hari ini!');
         }
 
         Absensi::create([
             'siswa_id' => $siswa->id,
             'tanggal' => Carbon::today(),
-            'jam_masuk' => Carbon::now()->format('H:i:s'),
-            'status' => 'hadir',
-            'keterangan' => 'Hadir tepat waktu',
+            'jam_masuk' => Carbon::now()->toTimeString(),
+            'foto' => $request->foto,
+            'lokasi' => $request->lokasi,
+            'status' => $request->status,
+            'keterangan' => $request->keterangan ?? 'Hadir via Kamera Web',
         ]);
 
-        return back()->with('success', 'Berhasil melakukan absensi!');
+        // MENGARAHKAN KE HALAMAN RIWAYAT SETELAH BERHASIL
+        return redirect()->route('siswa.absen.riwayat')->with('success', 'Berhasil melakukan absensi!');
     }
 
     public function riwayat()

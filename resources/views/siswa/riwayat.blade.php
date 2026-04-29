@@ -10,9 +10,6 @@
                 <h3 class="font-bold text-slate-800 text-lg">Semua Riwayat Absensi</h3>
                 <p class="text-xs text-slate-500">Daftar kehadiran Anda selama ini</p>
             </div>
-            <a href="{{ route('siswa.absen') }}" class="text-sm font-bold text-blue-600 hover:underline">
-                &larr; Kembali ke Absen
-            </a>
         </div>
 
         <div class="overflow-x-auto">
