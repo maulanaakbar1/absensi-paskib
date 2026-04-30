@@ -15,6 +15,9 @@ class AbsenController extends Controller
         $user = Auth::user();
         $siswa = $user->siswa;
         
+        // Cek apakah biodata lengkap
+        $isComplete = $siswa->nisn && $siswa->alamat && $siswa->nama_ayah;
+
         $absenHariIni = Absensi::where('siswa_id', $siswa->id)
                                 ->whereDate('tanggal', Carbon::today())
                                 ->first();
@@ -24,12 +27,18 @@ class AbsenController extends Controller
                                 ->take(5)
                                 ->get();
 
-        return view('siswa.absen', compact('absenHariIni', 'riwayatAbsen'));
+        // Kirim variabel isComplete ke view
+        return view('siswa.absen', compact('absenHariIni', 'riwayatAbsen', 'isComplete'));
     }
 
     public function store(Request $request)
     {
         $siswa = Auth::user()->siswa;
+
+        // Proteksi keras: Jika biodata belum lengkap, tendang balik ke profil
+        if (!$siswa->nisn || !$siswa->alamat || !$siswa->nama_ayah) {
+            return redirect()->route('siswa.profile')->with('error', 'Lengkapi biodata dulu sebelum absen!');
+        }
 
         $request->validate([
             'foto' => 'required',

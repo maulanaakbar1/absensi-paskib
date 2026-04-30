@@ -10,6 +10,7 @@ use App\Http\Controllers\Pembina\ProfileController as PembinaProfile;
 use App\Http\Controllers\Pembina\AnggotaController;
 use App\Http\Controllers\Siswa\DashboardController as SiswaDashboard;
 use App\Http\Controllers\Admin\SiswaController as AdminSiswa;
+use App\Http\Controllers\Pembina\RekapAbsensiController;
 
 Route::get('/', function () { 
     return redirect()->route('login'); 
@@ -56,6 +57,7 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/anggota/{id}', [AnggotaController::class, 'update'])->name('pembina.anggota.update');
         Route::delete('/anggota/{id}', [AnggotaController::class, 'destroy'])->name('pembina.anggota.destroy');
 
+        Route::get('/rekap-absensi', [RekapAbsensiController::class, 'index'])->name('pembina.rekap.index');
 
     });
 

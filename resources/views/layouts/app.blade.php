@@ -28,6 +28,26 @@
         @include('partials.' . Auth::user()->role . '.navbar')
         
         <div class="p-8">
+            @if(session('warning_data'))
+                <div class="mb-6 flex items-center justify-between gap-4 p-4 bg-amber-50 border border-amber-200 rounded-2xl shadow-sm">
+                    <div class="flex items-center gap-3">
+                        <div class="h-10 w-10 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold text-amber-900">Perhatian!</p>
+                            <p class="text-xs text-amber-700 opacity-90">{{ session('warning_data') }}</p>
+                        </div>
+                    </div>
+                    {{-- PASTIKAN ROUTE NYA ADALAH 'siswa.profile' --}}
+                    <a href="{{ route('siswa.profile') }}" class="px-4 py-2 bg-amber-600 text-white text-xs font-bold rounded-xl hover:bg-amber-700 transition flex-shrink-0">
+                        Lengkapi Sekarang
+                    </a>
+                </div>
+            @endif
+
             @yield('content')
         </div>
 

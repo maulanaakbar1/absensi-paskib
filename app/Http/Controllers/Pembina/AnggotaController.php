@@ -35,7 +35,7 @@ class AnggotaController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
-            'nis' => 'required|unique:siswas', 
+            'nisn' => 'required|unique:siswas,nisn',
             'kelas' => 'required',
             'jenis_kelamin' => 'required',
         ]);
@@ -50,7 +50,7 @@ class AnggotaController extends Controller
         Siswa::create([
             'user_id' => $user->id,
             'ekstrakurikuler_id' => $ekskulId, 
-            'nis' => $request->nis,
+            'nisn' => $request->nisn,
             'kelas' => $request->kelas,
             'jenis_kelamin' => $request->jenis_kelamin
         ]);
@@ -66,7 +66,7 @@ class AnggotaController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $user->id,
-            'nis' => 'required|unique:siswas,nis,' . $siswa->id,
+            'nisn' => 'required|unique:siswas,nisn,' . $siswa->id,
             'kelas' => 'required',
         ]);
 
@@ -79,7 +79,7 @@ class AnggotaController extends Controller
             $user->update(['password' => Hash::make($request->password)]);
         }
 
-        $siswa->update($request->only(['nis', 'kelas', 'jenis_kelamin', 'ekstrakurikuler_id']));
+        $siswa->update($request->only(['nisn', 'kelas', 'jenis_kelamin', 'ekstrakurikuler_id']));
 
         return back()->with('success', 'Data anggota berhasil diperbarui!');
     }

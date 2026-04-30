@@ -30,7 +30,8 @@
             <thead>
                 <tr class="bg-slate-50/50 border-b border-slate-100">
                     <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase">Siswa</th>
-                    <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase">NIS / Kelas</th>
+                    <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase">NISN</th>
+                    <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase">Kelas</th>
                     <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase">Jenis Kelamin</th>
                     <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase text-center">Aksi</th>
                 </tr>
@@ -47,7 +48,10 @@
                         </div>
                     </td>
                     <td class="px-6 py-4 text-sm font-bold text-slate-600">
-                        {{ $s->nis }} <span class="text-slate-300 mx-1">|</span> <span class="text-emerald-500 uppercase">{{ $s->kelas }}</span>
+                        {{ $s->nisn }}
+                    </td>
+                    <td class="px-6 py-4 text-sm font-bold text-slate-600">
+                        <span class="text-emerald-500 uppercase">{{ $s->kelas }}</span>
                     </td>
                     <td class="px-6 py-4">
                         <span class="px-3 py-1 rounded-lg bg-slate-100 text-slate-600 text-xs font-bold">
@@ -60,7 +64,7 @@
                                 id: '{{ $s->id }}',
                                 name: '{{ $s->user->name }}',
                                 email: '{{ $s->user->email }}',
-                                nis: '{{ $s->nis }}',
+                                nisn: '{{ $s->nisn }}',
                                 kelas: '{{ $s->kelas }}',
                                 jk: '{{ $s->jenis_kelamin }}'
                             }" class="p-2 text-amber-500 hover:bg-amber-50 rounded-lg transition">
@@ -115,8 +119,8 @@
                         </div>
                         <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <label class="text-xs font-bold text-slate-400 uppercase ml-1">NIS</label>
-                                <input type="text" name="nis" x-model="currentData.nis" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-emerald-500 focus:ring-0 transition" required>
+                                <label class="text-xs font-bold text-slate-400 uppercase ml-1">NISN</label>
+                                <input type="text" name="nisn" x-model="currentData.nisn" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-emerald-500 focus:ring-0 transition" required>
                             </div>
                             <div>
                                 <label class="text-xs font-bold text-slate-400 uppercase ml-1">Kelas</label>

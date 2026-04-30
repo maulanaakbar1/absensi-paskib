@@ -9,17 +9,29 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RoleMiddleware
 {
-    /**
-     * Handle an incoming request.
-     */
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
-        // Cek apakah user sudah login dan apakah rolenya ada dalam daftar yang diizinkan
+        // 1. Cek apakah user sudah login dan apakah rolenya diizinkan
         if (Auth::check() && in_array(Auth::user()->role, $roles)) {
+            
+            $user = Auth::user();
+
+            // 2. LOGIKA TAMBAHAN: Cek biodata jika user adalah siswa
+            if ($user->role === 'siswa' && $user->siswa) {
+                $siswa = $user->siswa;
+
+                // Tentukan field mana yang wajib (contoh: nisn, alamat, foto_profil)
+                $isComplete = $siswa->nisn && $siswa->alamat && $siswa->nama_ayah;
+
+                if (!$isComplete) {
+                    // Kirim pesan peringatan ke session tanpa memblokir akses ke dashboard
+                    session()->flash('warning_data', 'Biodata Anda belum lengkap! Silahkan lengkapi profil agar bisa melakukan absensi.');
+                }
+            }
+
             return $next($request);
         }
 
-        // Jika tidak punya akses, arahkan kembali
         return redirect('/login')->with('loginError', 'Anda tidak memiliki akses ke halaman tersebut.');
     }
 }

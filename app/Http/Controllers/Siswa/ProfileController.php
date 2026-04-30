@@ -26,6 +26,8 @@ class ProfileController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'kelas' => 'required|string',
+            'nis' => 'required|string|unique:siswas,nis,' . $siswa->id,
+            'jenis_kelamin' => 'required|in:L,P',
             'nisn' => 'required|string|unique:siswas,nisn,' . $siswa->id,
             'alamat' => 'nullable|string',
             'tempat_lahir' => 'nullable|string',
@@ -45,6 +47,8 @@ class ProfileController extends Controller
         $user->save();
 
         $siswa->update([
+            'nis' => $request->nis, 
+            'jenis_kelamin' => $request->jenis_kelamin, 
             'kelas' => $request->kelas,
             'nisn' => $request->nisn,
             'alamat' => $request->alamat,

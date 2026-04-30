@@ -29,4 +29,8 @@ class Siswa extends Model
     public function ekstrakurikuler() {
         return $this->belongsTo(Ekstrakurikuler::class);
     }
+
+    public function absensis() {
+        return $this->hasMany(Absensi::class);
+    }
 }

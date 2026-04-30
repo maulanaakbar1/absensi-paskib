@@ -47,7 +47,8 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div class="space-y-2">
                             <label class="text-sm font-bold text-slate-700">NIS</label>
-                            <input type="text" value="{{ $siswa->nis }}" disabled class="w-full px-4 py-3 rounded-xl bg-slate-50 text-slate-400 border border-slate-100 cursor-not-allowed">
+                            <input type="text" name="nis" value="{{ old('nis', $siswa->nis) }}" 
+                                class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none transition">
                         </div>
                         <div class="space-y-2">
                             <label class="text-sm font-bold text-slate-700">NISN</label>
@@ -67,7 +68,10 @@
                         </div>
                         <div class="space-y-2">
                             <label class="text-sm font-bold text-slate-700">Jenis Kelamin</label>
-                            <input type="text" value="{{ $siswa->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}" disabled class="w-full px-4 py-3 rounded-xl bg-slate-50 text-slate-400 border border-slate-100">
+                            <select name="jenis_kelamin" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none transition">
+                                <option value="L" {{ old('jenis_kelamin', $siswa->jenis_kelamin) == 'L' ? 'selected' : '' }}>Laki-laki</option>
+                                <option value="P" {{ old('jenis_kelamin', $siswa->jenis_kelamin) == 'P' ? 'selected' : '' }}>Perempuan</option>
+                            </select>
                         </div>
                     </div>
                     <div class="mt-6 space-y-2">
