@@ -43,6 +43,9 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/ekskul', [EkstrakurikulerController::class, 'store'])->name('admin.ekskul.store');
         Route::put('/ekskul/{id}', [EkstrakurikulerController::class, 'update'])->name('admin.ekskul.update');
         Route::delete('/ekskul/{id}', [EkstrakurikulerController::class, 'destroy'])->name('admin.ekskul.destroy');
+
+        Route::get('/rekap-absensi', [RekapAbsensiController::class, 'index'])->name('admin.rekap.index');
+
     });
 
     // --- KHUSUS PEMBINA ---

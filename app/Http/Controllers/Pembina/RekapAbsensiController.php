@@ -18,20 +18,19 @@ class RekapAbsensiController extends Controller
         
         $jumlahHari = Carbon::createFromDate($tahun, $bulan, 1)->daysInMonth;
 
-        $user = Auth::user();
-
-            if (!$user->pembina) {
-                return redirect()->back()->with('error', 'Akun Anda tidak terdaftar sebagai Pembina.');
-            }
-
+        if (auth()->user()->role == 'admin') {
+            $siswas = Siswa::with(['user','absensis' => function($q) use ($bulan,$tahun){
+                $q->whereMonth('tanggal',$bulan)
+                ->whereYear('tanggal',$tahun);
+            }])->get();
+        } else {
             $ekskulId = $user->pembina->ekstrakurikuler_id;
 
-            $siswas = Siswa::with(['user', 'absensis' => function($query) use ($bulan, $tahun) {
-                $query->whereMonth('tanggal', $bulan)
-                    ->whereYear('tanggal', $tahun);
-            }])
-            ->where('ekstrakurikuler_id', $ekskulId) // Gunakan variabel yang sudah divalidasi
-            ->get();
+            $siswas = Siswa::with(['user','absensis' => function($q) use ($bulan,$tahun){
+                $q->whereMonth('tanggal',$bulan)
+                ->whereYear('tanggal',$tahun);
+            }])->where('ekstrakurikuler_id',$ekskulId)->get();
+        }
 
         $namaBulan = [
             '01' => 'Januari', '02' => 'Februari', '03' => 'Maret', '04' => 'April',
