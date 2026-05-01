@@ -60,6 +60,9 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/anggota/{id}', [AnggotaController::class, 'update'])->name('pembina.anggota.update');
         Route::delete('/anggota/{id}', [AnggotaController::class, 'destroy'])->name('pembina.anggota.destroy');
 
+        Route::get('/absensi/manage', [RekapAbsensiController::class, 'manage'])->name('pembina.absensi.manage');
+        Route::post('/absensi/update', [RekapAbsensiController::class, 'updateStatus'])->name('pembina.absensi.update');
+
         Route::get('/rekap-absensi', [RekapAbsensiController::class, 'index'])->name('pembina.rekap.index');
 
     });

@@ -47,6 +47,10 @@
                 <div class="w-6 h-6 bg-slate-400 border border-slate-500 rounded-md"></div> 
                 <span class="text-sm font-bold text-slate-700">Alpa</span>
             </div>
+            <div class="flex items-center gap-3">
+                <div class="w-6 h-6 bg-red-500 border border-red-600 rounded-md"></div> 
+                <span class="text-sm font-bold text-slate-700">Libur</span>
+            </div>
         </div>
 
         <div class="p-6">
@@ -96,23 +100,31 @@
                                 @php
                                     $tgl = sprintf('%02d', $i);
                                     $fullDate = "$tahun-$bulan-$tgl";
+                                    
+                                    // Cek apakah hari ini adalah hari Minggu
+                                    $isLibur = \Carbon\Carbon::parse($fullDate)->isSunday();
+
                                     $absen = $siswa->absensis->firstWhere('tanggal', $fullDate);
 
                                     $statusColor = '';
                                     $statusChar = '';
 
-                                    if($absen) {
+                                    if($isLibur) {
+                                        // Jika Libur (Minggu), beri warna merah
+                                        $statusColor = 'bg-red-500 border-red-600';
+                                    } elseif($absen) {
+                                        // Jika ada data absen
                                         if($absen->status == 'hadir') {
-                                            $statusColor = 'bg-emerald-100 text-emerald-700 border border-emerald-200';
+                                            $statusColor = 'bg-emerald-100 text-emerald-700 border-emerald-200';
                                             $totalHadir++;
                                         } elseif($absen->status == 'sakit') {
-                                            $statusColor = 'bg-amber-100 text-amber-700 border border-amber-200';
+                                            $statusColor = 'bg-amber-100 text-amber-700 border-amber-200';
                                             $totalSakit++;
                                         } elseif($absen->status == 'izin') {
-                                            $statusColor = 'bg-blue-100 text-blue-700 border border-blue-200';
+                                            $statusColor = 'bg-blue-100 text-blue-700 border-blue-200';
                                             $totalIzin++;
                                         } elseif($absen->status == 'alpa') {
-                                            $statusColor = 'bg-slate-400 text-white border border-slate-500';
+                                            $statusColor = 'bg-slate-400 text-white border-slate-500';
                                             $totalAlpa++;
                                         }
                                     }
@@ -120,7 +132,7 @@
 
                                 <td class="border p-0 w-10 h-10">
                                     <div class="w-full h-full flex items-center justify-center {{ $statusColor }}">
-                                        {{ $statusChar }}
+                                        {{-- Biarkan kosong atau isi huruf jika perlu --}}
                                     </div>
                                 </td>
                             @endfor

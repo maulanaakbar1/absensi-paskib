@@ -16,14 +16,19 @@ class RekapAbsensiController extends Controller
         $bulan = $request->get('bulan', date('m'));
         $tahun = $request->get('tahun', date('Y'));
         
-        $jumlahHari = Carbon::createFromDate($tahun, $bulan, 1)->daysInMonth;
+        $jumlahHari = \Carbon\Carbon::createFromDate($tahun, $bulan, 1)->daysInMonth;
 
-        if (auth()->user()->role == 'admin') {
+        // --- TAMBAHKAN BARIS INI ---
+        $user = auth()->user(); 
+        // ---------------------------
+
+        if ($user->role == 'admin') {
             $siswas = Siswa::with(['user','absensis' => function($q) use ($bulan,$tahun){
                 $q->whereMonth('tanggal',$bulan)
                 ->whereYear('tanggal',$tahun);
             }])->get();
         } else {
+            // Sekarang variabel $user sudah bisa digunakan di sini
             $ekskulId = $user->pembina->ekstrakurikuler_id;
 
             $siswas = Siswa::with(['user','absensis' => function($q) use ($bulan,$tahun){
@@ -40,4 +45,21 @@ class RekapAbsensiController extends Controller
 
         return view('pembina.rekap_absensi', compact('siswas', 'bulan', 'tahun', 'jumlahHari', 'namaBulan'));
     }
+
+    public function manage(Request $request)
+    {
+        $tanggal = $request->get('tanggal', date('Y-m-d'));
+        
+        $user = auth()->user();
+        $ekskulId = $user->pembina->ekstrakurikuler_id;
+
+        $siswas = Siswa::with(['user', 'absensis' => function($q) use ($tanggal) {
+            $q->whereDate('tanggal', $tanggal);
+        }])
+        ->where('ekstrakurikuler_id', $ekskulId)
+        ->get();
+
+        return view('pembina.absensi_manage', compact('siswas', 'tanggal'));
+    }
+    
 }
