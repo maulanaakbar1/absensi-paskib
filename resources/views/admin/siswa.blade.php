@@ -31,7 +31,8 @@
             <thead>
                 <tr class="bg-slate-50/50 border-b border-slate-100">
                     <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase">Siswa</th>
-                    <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase">NIS / Kelas</th>
+                    <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase">NIS</th>
+                    <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase">Kelas</th>
                     <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase">Ekstrakurikuler</th>
                     <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase text-center">Aksi</th>
                 </tr>
@@ -51,7 +52,10 @@
                         </div>
                     </td>
                     <td class="px-6 py-4 text-sm font-bold text-slate-600">
-                        {{ $s->nis }} <span class="text-slate-300 mx-1">|</span> <span class="text-blue-500 uppercase">{{ $s->kelas }}</span>
+                        {{ $s->nis }}
+                    </td>
+                    <td class="px-6 py-4 text-sm font-bold text-slate-600">
+                        <span class="text-blue-500 uppercase">{{ $s->kelas }}</span>
                     </td>
                     <td class="px-6 py-4">
                         <span class="px-3 py-1 rounded-lg bg-indigo-50 text-indigo-600 text-xs font-bold">
