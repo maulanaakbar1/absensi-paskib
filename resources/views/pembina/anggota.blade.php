@@ -119,6 +119,12 @@
                         </div>
                         <div class="grid grid-cols-2 gap-4">
                             <div>
+                                <label class="text-xs font-bold text-slate-400 uppercase ml-1">NIS</label>
+                                <input type="text" name="nis" x-model="currentData.nis"
+                                    class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-emerald-500"
+                                    required>
+                            </div>
+                            <div>
                                 <label class="text-xs font-bold text-slate-400 uppercase ml-1">NISN</label>
                                 <input type="text" name="nisn" x-model="currentData.nisn" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-emerald-500 focus:ring-0 transition" required>
                             </div>
