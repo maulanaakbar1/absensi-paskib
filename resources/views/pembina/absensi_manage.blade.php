@@ -49,8 +49,10 @@
                                     <input type="hidden" name="siswa_id" value="{{ $siswa->id }}">
                                     <input type="hidden" name="tanggal" value="{{ $tanggal }}">
                                     
-                                    <select name="status" onchange="this.form.submit()" 
-                                        class="text-center rounded-lg border-slate-200 focus:border-blue-500 focus:ring-blue-500 py-1.5 w-40">
+                                    <select name="status" onchange="this.form.submit()"
+                                        @if($status == 'hadir') disabled @endif
+                                        class="text-center rounded-lg py-1.5 w-40
+                                        {{ $status == 'hadir' ? 'bg-slate-100 text-slate-400 cursor-not-allowed' : 'border-slate-200 focus:border-blue-500 focus:ring-blue-500' }}">
                                         <option value="" {{ $status == 'belum ada' ? 'selected' : '' }} disabled>-- Pilih Status --</option>
                                         <option value="hadir" {{ $status == 'hadir' ? 'selected' : '' }}>Hadir</option>
                                         <option value="sakit" {{ $status == 'sakit' ? 'selected' : '' }}>Sakit</option>

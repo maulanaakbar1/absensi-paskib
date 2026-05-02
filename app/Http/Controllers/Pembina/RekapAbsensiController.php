@@ -56,8 +56,12 @@ class RekapAbsensiController extends Controller
 
         // Cari data absensi berdasarkan siswa dan tanggal
         $absensi = Absensi::where('siswa_id', $request->siswa_id)
-                            ->whereDate('tanggal', $request->tanggal)
-                            ->first();
+            ->whereDate('tanggal', $request->tanggal)
+            ->first();
+
+        if ($absensi && $absensi->status === 'hadir') {
+            return back()->with('error', 'Status hadir tidak bisa diubah!');
+        }
 
         if ($absensi) {
             $absensi->update([
@@ -70,7 +74,6 @@ class RekapAbsensiController extends Controller
                 'status'   => $request->status,
             ]);
         }
-
         return redirect()->back()->with('success', 'Status absensi berhasil diperbarui');
     }
 
