@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Pembina;
 
 use App\Http\Controllers\Controller;
 use App\Models\Jadwal;
+use App\Models\HariLibur;
 use Illuminate\Http\Request;
 
 class JadwalController extends Controller
@@ -52,5 +53,42 @@ class JadwalController extends Controller
     {
         Jadwal::destroy($id);
         return back()->with('success', 'Jadwal berhasil dihapus');
+    }
+
+    public function liburIndex()
+    {
+        $ekskulId = auth()->user()->pembina->ekstrakurikuler_id;
+        $hariLibur = HariLibur::where('ekstrakurikuler_id', $ekskulId)->orderBy('tanggal', 'desc')->get();
+        
+        return view('pembina.hari_libur', compact('hariLibur'));
+    }
+
+    public function liburStore(Request $request)
+    {
+        $request->validate([
+            'tanggal' => 'required|date',
+            'keterangan' => 'required|string|max:255'
+        ]);
+
+        HariLibur::create([
+            'ekstrakurikuler_id' => auth()->user()->pembina->ekstrakurikuler_id,
+            'tanggal' => $request->tanggal,
+            'keterangan' => $request->keterangan,
+        ]);
+
+        return back()->with('success', 'Hari libur berhasil ditambahkan');
+    }
+
+    public function liburUpdate(Request $request, $id)
+    {
+        $libur = HariLibur::findOrFail($id);
+        $libur->update($request->all());
+        return back()->with('success', 'Data libur berhasil diperbarui');
+    }
+
+    public function liburDestroy($id)
+    {
+        HariLibur::destroy($id);
+        return back()->with('success', 'Hari libur berhasil dihapus');
     }
 }

@@ -71,6 +71,12 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/jadwal/{id}', [JadwalController::class, 'update'])->name('pembina.jadwal.update');
         Route::delete('/jadwal/{id}', [JadwalController::class, 'destroy'])->name('pembina.jadwal.destroy');
 
+
+        Route::get('/hari-libur', [JadwalController::class, 'liburIndex'])->name('pembina.libur.index');
+        Route::post('/hari-libur', [JadwalController::class, 'liburStore'])->name('pembina.libur.store');
+        Route::put('/hari-libur/{id}', [JadwalController::class, 'liburUpdate'])->name('pembina.libur.update');
+        Route::delete('/hari-libur/{id}', [JadwalController::class, 'liburDestroy'])->name('pembina.libur.destroy');
+
     });
 
     // --- KHUSUS SISWA ---
