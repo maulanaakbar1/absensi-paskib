@@ -46,6 +46,34 @@ class RekapAbsensiController extends Controller
         return view('pembina.rekap_absensi', compact('siswas', 'bulan', 'tahun', 'jumlahHari', 'namaBulan'));
     }
 
+    public function updateStatus(Request $request)
+    {
+        $request->validate([
+            'siswa_id' => 'required|exists:siswas,id',
+            'tanggal' => 'required|date',
+            'status' => 'required|in:hadir,izin,sakit,alpha'
+        ]);
+
+        // Cari data absensi berdasarkan siswa dan tanggal
+        $absensi = Absensi::where('siswa_id', $request->siswa_id)
+                            ->whereDate('tanggal', $request->tanggal)
+                            ->first();
+
+        if ($absensi) {
+            $absensi->update([
+                'status' => $request->status
+            ]);
+        } else {
+            Absensi::create([
+                'siswa_id' => $request->siswa_id,
+                'tanggal'  => $request->tanggal,
+                'status'   => $request->status,
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Status absensi berhasil diperbarui');
+    }
+
     public function manage(Request $request)
     {
         $tanggal = $request->get('tanggal', date('Y-m-d'));

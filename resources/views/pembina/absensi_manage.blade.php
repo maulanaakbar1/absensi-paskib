@@ -28,7 +28,7 @@
                     <th class="px-6 py-4 font-bold text-slate-700">NISN</th>
                     <th class="px-6 py-4 font-bold text-slate-700">Nama Siswa</th>
                     <th class="px-6 py-4 font-bold text-slate-700">Kelas</th>
-                    <th class="px-6 py-4 font-bold text-slate-700">Status Kehadiran</th>
+                    <th class="px-12 py-4 font-bold text-slate-700">Status Kehadiran</th>
                     <th class="px-6 py-4 font-bold text-slate-700">Keterangan</th>
                 </tr>
             </thead>
@@ -45,19 +45,19 @@
                         <td class="px-6 py-4 text-slate-600">{{ $siswa->kelas }}</td>
                         <td class="px-6 py-4">
                             <form action="{{ route('pembina.absensi.update') }}" method="POST" class="flex items-center">
-                                @csrf
-                                <input type="hidden" name="siswa_id" value="{{ $siswa->id }}">
-                                <input type="hidden" name="tanggal" value="{{ $tanggal }}">
-                                
-                                <select name="status" onchange="this.form.submit()" 
-                                    class="text-sm rounded-lg border-slate-200 focus:border-blue-500 focus:ring-blue-500 py-1.5 w-40">
-                                    <option value="" {{ $status == 'belum ada' ? 'selected' : '' }}>-- Pilih Status --</option>
-                                    <option value="hadir" {{ $status == 'hadir' ? 'selected' : '' }}>Hadir</option>
-                                    <option value="sakit" {{ $status == 'sakit' ? 'selected' : '' }}>Sakit</option>
-                                    <option value="izin" {{ $status == 'izin' ? 'selected' : '' }}>Izin</option>
-                                    <option value="alpa" {{ $status == 'alpa' ? 'selected' : '' }}>Alpa</option>
-                                </select>
-                            </form>
+                                    @csrf
+                                    <input type="hidden" name="siswa_id" value="{{ $siswa->id }}">
+                                    <input type="hidden" name="tanggal" value="{{ $tanggal }}">
+                                    
+                                    <select name="status" onchange="this.form.submit()" 
+                                        class="text-center rounded-lg border-slate-200 focus:border-blue-500 focus:ring-blue-500 py-1.5 w-40">
+                                        <option value="" {{ $status == 'belum ada' ? 'selected' : '' }} disabled>-- Pilih Status --</option>
+                                        <option value="hadir" {{ $status == 'hadir' ? 'selected' : '' }}>Hadir</option>
+                                        <option value="sakit" {{ $status == 'sakit' ? 'selected' : '' }}>Sakit</option>
+                                        <option value="izin" {{ $status == 'izin' ? 'selected' : '' }}>Izin</option>
+                                        <option value="alpa" {{ $status == 'alpa' ? 'selected' : '' }}>Alpa</option>
+                                    </select>
+                                </form>
                         </td>
                         <td class="px-6 py-4">
                             @if($status == 'hadir')

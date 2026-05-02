@@ -12,11 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('absensis', function (Blueprint $table) {
-            // Kita gunakan longText karena data foto Base64 sangat panjang
-            $table->longText('foto')->after('jam_masuk'); 
-            
-            // Kolom lokasi untuk menyimpan latitude & longitude
-            $table->string('lokasi')->after('foto');
+            $table->longText('foto')->nullable()->after('jam_masuk'); 
+            $table->string('lokasi')->nullable()->after('foto');
         });
     }
 
