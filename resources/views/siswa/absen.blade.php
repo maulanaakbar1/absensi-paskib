@@ -83,6 +83,17 @@
 
                     {{-- Form Area --}}
                     @if(!$absenHariIni)
+                    @if(!$adaJadwal)
+                        <div class="p-4 bg-red-100 text-red-700 rounded-xl border border-red-200 mb-4">
+                            Tidak ada jadwal latihan hari ini.
+                        </div>
+                    @endif
+
+                    @if($isLibur)
+                        <div class="p-4 bg-amber-100 text-amber-700 rounded-xl border border-amber-200 mb-4">
+                            Hari ini adalah hari libur latihan.
+                        </div>
+                    @endif
                     <form action="{{ route('siswa.absen.store') }}" method="POST" id="absen-form" class="space-y-6">
                         @csrf
                         {{-- Hidden Input untuk Data --}}
@@ -111,7 +122,7 @@
                             <div id="live-buttons">
                                 <button type="button" onclick="captureImage()" id="btn-capture" 
                                     {{-- Tombol mati jika absen sudah ada ATAU biodata tidak lengkap --}}
-                                    @if(!$isComplete || $absenHariIni) disabled @endif
+                                    @if(!$isComplete || $absenHariIni || !$adaJadwal || $isLibur) disabled @endif
                                     class="w-full py-5 bg-slate-800 text-white rounded-2xl font-bold text-lg hover:bg-slate-900 hover:-translate-y-1 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:translate-y-0 transition-all duration-300 shadow-xl shadow-slate-200 flex items-center justify-center gap-3">
                                     
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -121,6 +132,10 @@
                                     
                                     @if(!$isComplete)
                                         Biodata Belum Lengkap
+                                    @elseif(!$adaJadwal)
+                                        Tidak Ada Jadwal Hari Ini
+                                    @elseif($isLibur)
+                                        Hari Libur
                                     @else
                                         Ambil Foto
                                     @endif
@@ -186,6 +201,9 @@
 
     // 2. Geolocation Otomatis
     const isComplete = {{ $isComplete ? 'true' : 'false' }};
+    const adaJadwal = {{ $adaJadwal ? 'true' : 'false' }};
+    const isLibur = {{ $isLibur ? 'true' : 'false' }};
+    const sudahAbsen = {{ $absenHariIni ? 'true' : 'false' }};
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(position => {
@@ -200,9 +218,11 @@
             locationBox.classList.add('border-blue-200', 'bg-blue-50/50');
 
             // HANYA aktifkan tombol jika lokasi OK DAN biodata LENGKAP
-            if (isComplete) {
-                btnCapture.disabled = false;
-            }
+            if (isComplete && adaJadwal && !isLibur && !sudahAbsen) {
+                    btnCapture.disabled = false;
+                } else {
+                    btnCapture.disabled = true;
+                }
         }, err => {
             locationText.innerText = "Gagal mendapatkan lokasi. Aktifkan GPS!";
             locationText.classList.add('text-red-500');
