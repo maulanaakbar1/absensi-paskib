@@ -11,6 +11,7 @@ use App\Http\Controllers\Pembina\AnggotaController;
 use App\Http\Controllers\Siswa\DashboardController as SiswaDashboard;
 use App\Http\Controllers\Admin\SiswaController as AdminSiswa;
 use App\Http\Controllers\Pembina\RekapAbsensiController;
+use App\Http\Controllers\Pembina\JadwalController;
 
 Route::get('/', function () { 
     return redirect()->route('login'); 
@@ -64,6 +65,11 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/absensi/update', [RekapAbsensiController::class, 'updateStatus'])->name('pembina.absensi.update');
 
         Route::get('/rekap-absensi', [RekapAbsensiController::class, 'index'])->name('pembina.rekap.index');
+
+        Route::get('/jadwal', [JadwalController::class, 'index'])->name('pembina.jadwal.index');
+        Route::post('/jadwal', [JadwalController::class, 'store'])->name('pembina.jadwal.store');
+        Route::put('/jadwal/{id}', [JadwalController::class, 'update'])->name('pembina.jadwal.update');
+        Route::delete('/jadwal/{id}', [JadwalController::class, 'destroy'])->name('pembina.jadwal.destroy');
 
     });
 
