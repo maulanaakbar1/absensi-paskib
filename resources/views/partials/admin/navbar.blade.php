@@ -26,20 +26,11 @@
 
         {{-- Dropdown Menu (Seperti gambar image_24b58e.png) --}}
         <div x-show="userMenu" 
-             x-transition:enter="transition ease-out duration-100"
-             x-transition:enter-start="transform opacity-0 scale-95"
-             x-transition:enter-end="transform opacity-100 scale-100"
-             class="absolute right-0 top-full mt-3 w-48 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-50">
-            
-            <a href="{{ route('pembina.profile') }}" class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 transition">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-                Profil Saya
-            </a>
-
-            <div class="border-t border-slate-100 my-1"></div>
-
+                x-transition:enter="transition ease-out duration-100"
+                x-transition:enter-start="transform opacity-0 scale-95"
+                x-transition:enter-end="transform opacity-100 scale-100"
+                class="absolute right-0 top-full mt-3 w-48 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-50">
+                
             <form action="{{ route('logout') }}" method="POST">
                 @csrf
                 <button type="submit" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold text-red-500 hover:bg-red-50 transition">
