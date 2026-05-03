@@ -21,31 +21,33 @@ class ProfileController extends Controller
     public function update(Request $request)
     {
         $user = Auth::user();
-        $pembina = Pembina::where('user_id', $user->id)->first();
+
+        $pembina = Pembina::firstOrCreate([
+            'user_id' => $user->id
+        ]);
 
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
-            'nip' => 'nullable|unique:pembinas,nip,' . ($pembina->id ?? 0),
+            'nip' => 'nullable|unique:pembinas,nip,' . $pembina->id,
             'no_telp' => 'nullable|max:15',
             'password' => 'nullable|min:8|confirmed',
         ]);
 
-        // Update Tabel Users
-        $user->name = $request->name;
-        $user->email = $request->email;
-        if ($request->filled('password')) {
-            $user->password = Hash::make($request->password);
-        }
-        $user->save();
+        // Update user
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->filled('password') 
+                ? Hash::make($request->password) 
+                : $user->password,
+        ]);
 
-        // Update Tabel Pembinas
-        if ($pembina) {
-            $pembina->update([
-                'nip' => $request->nip,
-                'no_telp' => $request->no_telp,
-            ]);
-        }
+        // Update pembina
+        $pembina->update([
+            'nip' => $request->nip,
+            'no_telp' => $request->no_telp,
+        ]);
 
         return back()->with('success', 'Profil berhasil diperbarui!');
     }

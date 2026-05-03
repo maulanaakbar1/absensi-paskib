@@ -60,8 +60,19 @@
             
             <p class="text-xs font-bold text-amber-500 uppercase ml-1">Ganti Password (Kosongkan jika tidak diganti)</p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
-                <input type="password" name="password" placeholder="Password Baru" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-emerald-500 focus:ring-0 transition">
-                <input type="password" name="password_confirmation" placeholder="Konfirmasi Password" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-emerald-500 focus:ring-0 transition">
+                <input 
+                    type="password" 
+                    name="password" 
+                    placeholder="Password Baru"
+                    autocomplete="new-password"
+                    class="w-full px-4 py-3 rounded-xl border border-slate-200"/>
+
+                <input 
+                    type="password" 
+                    name="password_confirmation" 
+                    placeholder="Konfirmasi Password"
+                    autocomplete="new-password"
+                    class="w-full px-4 py-3 rounded-xl border border-slate-200"/>
             </div>
 
             <div class="pt-4">
