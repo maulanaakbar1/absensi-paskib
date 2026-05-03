@@ -35,8 +35,8 @@
             Data Anggota
         </a>
 
-        {{-- Dropdown Absensi --}}
-        <div>
+        {{-- Dropdown Absensi (Sudah Fix Smooth) --}}
+        <div class="relative">
             <button @click="openAbsensi = !openAbsensi" 
                 class="w-full flex items-center justify-between gap-3 {{ Request::is('pembina/rekap*') || Request::is('pembina/absensi/manage*') || Request::is('pembina/riwayat-absensi*') ? 'text-blue-600 bg-blue-50/50' : 'text-slate-500 hover:bg-slate-50' }} px-4 py-3 rounded-xl font-semibold transition-all duration-300">
                 <div class="flex items-center gap-3">
@@ -50,6 +50,7 @@
                 </svg>
             </button>
 
+            {{-- Container ini harus menggunakan x-show dan x-transition --}}
             <div x-show="openAbsensi" 
                 x-cloak
                 x-transition:enter="transition ease-out duration-300"
@@ -65,8 +66,8 @@
             </div>
         </div>
 
-        {{-- Dropdown Jadwal --}}
-        <div>
+        {{-- Dropdown Jadwal (Sudah Fix Smooth) --}}
+        <div class="relative">
             <button @click="openJadwal = !openJadwal" 
                 class="w-full flex items-center justify-between gap-3 {{ Request::is('pembina/jadwal*') || Request::is('pembina/hari-libur*') ? 'text-blue-600 bg-blue-50/50' : 'text-slate-500 hover:bg-slate-50' }} px-4 py-3 rounded-xl font-semibold transition-all duration-300">
                 <div class="flex items-center gap-3">
@@ -93,6 +94,5 @@
                 <a href="{{ route('pembina.libur.index') }}" class="block px-4 py-2 text-sm rounded-lg {{ Request::is('pembina/hari-libur*') ? 'text-blue-600 font-bold bg-blue-50/50' : 'text-slate-500 hover:text-blue-600 hover:bg-slate-50' }} transition-colors">Hari Libur</a>
             </div>
         </div>
-
     </nav>
 </aside>
