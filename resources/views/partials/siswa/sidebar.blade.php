@@ -33,16 +33,8 @@
             <span class="font-bold text-sm">Dashboard</span>
         </a>
 
-        <a href="{{ route('siswa.profile') }}" 
-           class="flex items-center gap-3 px-4 py-3 rounded-2xl transition {{ request()->routeIs('siswa.profile') ? 'bg-blue-50 text-blue-600' : 'text-slate-500 hover:bg-slate-50' }}">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-            </svg>
-            <span class="font-bold text-sm">Profil Saya</span>
-        </a>
-
         <a href="{{ route('siswa.absen') }}" 
-           class="flex items-center gap-3 px-4 py-3 rounded-2xl transition {{ request()->routeIs('siswa.absen') ? 'bg-blue-50 text-blue-600' : 'text-slate-500 hover:bg-slate-50' }}">
+            class="flex items-center gap-3 px-4 py-3 rounded-2xl transition {{ request()->routeIs('siswa.absen') ? 'bg-blue-50 text-blue-600' : 'text-slate-500 hover:bg-slate-50' }}">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 002-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
             </svg>
@@ -56,17 +48,6 @@
             </svg>
             <span class="font-bold text-sm">Riwayat Absen</span>
         </a>
+        
     </nav>
-
-    <div class="p-4 border-t border-slate-100 mt-auto">
-        <form action="{{ route('logout') }}" method="POST">
-            @csrf
-            <button type="submit" class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-red-500 hover:bg-red-50 transition">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                </svg>
-                <span class="font-bold text-sm">Keluar</span>
-            </button>
-        </form>
-    </div>
 </aside>
