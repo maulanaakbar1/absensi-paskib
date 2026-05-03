@@ -92,5 +92,21 @@ class RekapAbsensiController extends Controller
 
         return view('pembina.absensi_manage', compact('siswas', 'tanggal'));
     }
+
+    public function riwayat(Request $request)
+    {
+        $user = auth()->user();
+        $ekskulId = $user->pembina->ekstrakurikuler_id;
+
+        $riwayat = Absensi::whereHas('siswa', function($query) use ($ekskulId) {
+            $query->where('ekstrakurikuler_id', $ekskulId);
+        })
+        ->with('siswa.user') 
+        ->latest('tanggal')
+        ->latest('jam_masuk')
+        ->paginate(15); 
+
+        return view('pembina.riwayat_absensi', compact('riwayat'));
+    }
     
 }

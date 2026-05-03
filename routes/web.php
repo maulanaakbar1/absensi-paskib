@@ -77,6 +77,8 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/hari-libur/{id}', [JadwalController::class, 'liburUpdate'])->name('pembina.libur.update');
         Route::delete('/hari-libur/{id}', [JadwalController::class, 'liburDestroy'])->name('pembina.libur.destroy');
 
+        Route::get('/riwayat-absensi', [RekapAbsensiController::class, 'riwayat'])->name('pembina.riwayat.index');
+
     });
 
     // --- KHUSUS SISWA ---
