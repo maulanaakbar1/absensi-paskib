@@ -6,7 +6,18 @@
         
         {{-- Header & Filter --}}
         <div class="p-6 border-b border-slate-100">
-            <form action="{{ route('pembina.rekap.index') }}" method="GET" class="flex flex-wrap items-end gap-4">
+            <form action="{{ route('admin.rekap.index') }}" method="GET" class="flex flex-wrap items-end gap-4">
+                <div class="flex-1 min-w-[200px]">
+                    <label class="block text-sm font-semibold text-slate-600 mb-2">Pilih Ekskul</label>
+                    <select name="ekskul" class="w-full border-slate-200 rounded-xl focus:ring-emerald-500">
+                        <option value="all">Semua Ekskul</option>
+                        @foreach($listEkskul as $item)
+                            <option value="{{ $item->id }}" {{ $ekskul == $item->id ? 'selected' : '' }}>
+                                {{ $item->nama }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
                 <div class="flex-1 min-w-[200px]">
                     <label class="block text-sm font-semibold text-slate-600 mb-2">Pilih Bulan</label>
                     <select name="bulan" class="w-full border-slate-200 rounded-xl focus:ring-emerald-500">
@@ -46,6 +57,11 @@
             <div class="flex items-center gap-3">
                 <div class="w-6 h-6 bg-slate-400 border border-slate-500 rounded-md"></div> 
                 <span class="text-sm font-bold text-slate-700">Alpa</span>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <div class="w-6 h-6 bg-red-500 border border-red-600 rounded-md"></div> 
+                <span class="text-sm font-bold text-slate-700">Libur</span>
             </div>
         </div>
 
@@ -96,32 +112,47 @@
                                 @php
                                     $tgl = sprintf('%02d', $i);
                                     $fullDate = "$tahun-$bulan-$tgl";
+
+                                    $tanggalCarbon = \Carbon\Carbon::parse($fullDate);
+                                    $hari = $tanggalCarbon->translatedFormat('l');
+
+                                    $isLibur = $hariLibur
+                                        ->where('ekstrakurikuler_id', $siswa->ekstrakurikuler_id)
+                                        ->where('tanggal', $fullDate)
+                                        ->isNotEmpty();
+
+                                    $adaJadwal = $jadwals
+                                        ->where('ekstrakurikuler_id', $siswa->ekstrakurikuler_id)
+                                        ->where('hari', $hari)
+                                        ->isNotEmpty();
+
                                     $absen = $siswa->absensis->firstWhere('tanggal', $fullDate);
 
                                     $statusColor = '';
-                                    $statusChar = '';
 
-                                    if($absen) {
-                                        if($absen->status == 'hadir') {
-                                            $statusColor = 'bg-emerald-100 text-emerald-700 border border-emerald-200';
+                                    if ($isLibur) {
+                                        $statusColor = 'bg-red-500 border-red-600';
+                                    } elseif (!$adaJadwal) {
+                                        $statusColor = 'bg-slate-100';
+                                    } elseif ($absen) {
+                                        if ($absen->status == 'hadir') {
+                                            $statusColor = 'bg-emerald-100 border-emerald-200';
                                             $totalHadir++;
-                                        } elseif($absen->status == 'sakit') {
-                                            $statusColor = 'bg-amber-100 text-amber-700 border border-amber-200';
+                                        } elseif ($absen->status == 'sakit') {
+                                            $statusColor = 'bg-amber-100 border-amber-200';
                                             $totalSakit++;
-                                        } elseif($absen->status == 'izin') {
-                                            $statusColor = 'bg-blue-100 text-blue-700 border border-blue-200';
+                                        } elseif ($absen->status == 'izin') {
+                                            $statusColor = 'bg-blue-100 border-blue-200';
                                             $totalIzin++;
-                                        } elseif($absen->status == 'alpa') {
-                                            $statusColor = 'bg-slate-400 text-white border border-slate-500';
+                                        } elseif ($absen->status == 'alpa') {
+                                            $statusColor = 'bg-slate-400 border-slate-500';
                                             $totalAlpa++;
                                         }
                                     }
                                 @endphp
 
                                 <td class="border p-0 w-10 h-10">
-                                    <div class="w-full h-full flex items-center justify-center {{ $statusColor }}">
-                                        {{ $statusChar }}
-                                    </div>
+                                    <div class="w-full h-full flex items-center justify-center {{ $statusColor }}"></div>
                                 </td>
                             @endfor
 
